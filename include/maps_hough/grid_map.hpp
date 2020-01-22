@@ -37,7 +37,7 @@
 
 #include <vector>
 
-#include "common.h"
+#include "maps_hough/common.hpp"
 
 /*!
 \file grid_map.h

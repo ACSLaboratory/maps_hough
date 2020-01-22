@@ -39,7 +39,7 @@
 #ifndef IO_H
 #define IO_H
 
-#include "common.h"
+#include "maps_hough/common.hpp"
 #include <vector>
 #include <fstream>
 

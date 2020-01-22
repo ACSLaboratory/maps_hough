@@ -43,10 +43,11 @@
 #ifndef MANIPULATE_MAP
 #define MANIPULATE_MAP
 
-#include "grid_map.h"
+#include "maps_hough/grid_map.hpp"
 #include <list>
 
-namespace mapmerge {
+namespace mapmerge
+{
 
   /*!
     Turns all grid cells whose status is unknown to free. Other cells are left the way they are. 
@@ -64,7 +65,7 @@ are initialized to the unknownn status
 @param dx translation along the x axis (columns)
 @param dy translation along the y axis (rows)
  */
- void translate_map(grid_map& out,const grid_map& in,int dx,int dy);
+void translate_map(grid_map& out,const grid_map& in,int dx,int dy);
 
  /*!
    Creates a new map rotating an existing one. Rotation is performed about the center
@@ -122,14 +123,15 @@ void save_map_to_file(const grid_map& to_save,const char* fn);
   @param ty translation along y (row)
   @param filler character to use to fill cells that are not the image of any cell of the starting map
  */
-void raw_transform_map(grid_map& out,const grid_map& in,float thetaDeg,float tx,float ty,unsigned char filler);
+void raw_transform_map(grid_map& out, const grid_map& in, float thetaDeg, float tx, float ty, unsigned char filler);
 
 /*!
   \brief A solution to the map merging problem.
  
   It represents both a scored rototranslation.
  */
-struct transformation {
+struct transformation
+{
   /*! Translation along x (columns) */
   int deltax;
   /*! Translation along y (rows) */
@@ -154,7 +156,7 @@ struct transformation {
   @param fraction fraction of points to use if the randomized version is used (must be between 0 and 1)
   @return a vector of hypothesis sorted in decreasing order accordingly to the score value. The vector will have at most n_hypothesis elements
  */
-std::vector<transformation> get_hypothesis(const grid_map& map1,const grid_map& map2,unsigned int n_hypothesis,unsigned int hough_increment, bool randomized=false,float fraction=0.5);
+std::vector<transformation> get_hypothesis(const grid_map& map1, const grid_map& map2, unsigned int n_hypothesis, unsigned int hough_increment, bool randomized=false, float fraction=0.5);
 
 /*!
   \brief Solves the merge map problem using a robust approach.
@@ -169,7 +171,7 @@ is achieved by trying additional two rotations around each promising rotation id
   @param fraction fraction of points to use if the randomized version is used (must be between 0 and 1)
   @return a vector of hypothesis sorted in decreasing order accordingly to the score value. The vector will have at most 3* n_hypothesis elements
  */
-std::vector<transformation> get_hypothesis_robust(const grid_map&,const grid_map&,unsigned int,unsigned int, bool=false,float=0.5);
+std::vector<transformation> get_hypothesis_robust(const grid_map&, const grid_map&, unsigned int, unsigned int, bool=false, float=0.5);
 
 //void merge_maps(grid_map&,const grid_map&,const grid_map&,const transformation);
 
@@ -179,7 +181,7 @@ std::vector<transformation> get_hypothesis_robust(const grid_map&,const grid_map
   @param m2 second map
   @return agreement value
  */
-unsigned int agreement(const grid_map& m1,const grid_map& m2);
+unsigned int agreement(const grid_map& m1, const grid_map& m2);
 
 /*! 
   Computes the agreement between two maps, i.e. the number of cell that are free in the first and
@@ -188,7 +190,7 @@ unsigned int agreement(const grid_map& m1,const grid_map& m2);
   @param m2 second map
   @return disagreement value
  */
-unsigned int disagreement(const grid_map&,const grid_map&);
+unsigned int disagreement(const grid_map&, const grid_map&);
 
 /*! 
   Computes the overlapping between two maps, i.e. the number of cell that are equal in both maps.
@@ -196,7 +198,7 @@ unsigned int disagreement(const grid_map&,const grid_map&);
   @param m2 second map
   @return overlapping value
  */
-unsigned int overlapping(const grid_map&,const grid_map&);
+unsigned int overlapping(const grid_map&, const grid_map&);
 
 
 /*! 
@@ -206,7 +208,7 @@ between agreement and disagreement
   @param m2 second map
   @return acceptance index
  */
-float acceptance_index(const grid_map&,const grid_map&);
+float acceptance_index(const grid_map&, const grid_map&);
 
 }
 

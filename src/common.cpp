@@ -32,12 +32,12 @@
 
 */
 
-#include "common.h"
+#include "maps_hough/common.hpp"
 
 namespace mapmerge
 {
 
-unsigned long int compute_time(const timeval& start,const timeval& end)
+unsigned long int compute_time(const timeval& start, const timeval& end)
 {
 
   unsigned long int retval = 0;

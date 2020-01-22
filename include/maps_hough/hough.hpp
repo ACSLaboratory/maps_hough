@@ -41,8 +41,8 @@
 #define HOUGH_H
 
 #include <vector>
-#include "common.h"
-#include "grid_map.h"
+#include "maps_hough/common.hpp"
+#include "maps_hough/grid_map.hpp"
 
 namespace mapmerge
 {

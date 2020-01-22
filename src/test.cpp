@@ -33,11 +33,11 @@
 */
 
 
-#include "grid_map.h"
-#include "io.h"
-#include "common.h"
-#include "hough.h"
-#include "manipulatemap.h"
+#include "maps_hough/grid_map.hpp"
+#include "maps_hough/io.hpp"
+#include "maps_hough/common.hpp"
+#include "maps_hough/hough.hpp"
+#include "maps_hough/manipulatemap.hpp"
 
 #include <iterator>
 #include <iostream>
@@ -50,7 +50,8 @@ using namespace mapmerge;
 
 const unsigned int n_hypothesis = 4;
 
-int main(int argc,char **argv) {
+int main(int argc,char **argv)
+{
   
   char file1[] = "datasets/LongRun6.txt";
   char file2[] = "datasets/LongRun7.txt";

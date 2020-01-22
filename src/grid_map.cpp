@@ -32,7 +32,7 @@
 
 */
 
-#include "grid_map.h"
+#include "maps_hough/grid_map.hpp"
 
 
 #include <stdlib.h>
@@ -56,7 +56,7 @@ grid_map::grid_map()
 
 }
 
-grid_map::grid_map(unsigned int r,unsigned int c)
+grid_map::grid_map(unsigned int r, unsigned int c)
 {
   
   resize_map(r,c);
@@ -67,7 +67,7 @@ grid_map::grid_map(unsigned int r,unsigned int c)
   
 }
 
-void grid_map::resize_map(unsigned int r,unsigned int c)
+void grid_map::resize_map(unsigned int r, unsigned int c)
 {
 
   rows = r;
@@ -76,7 +76,7 @@ void grid_map::resize_map(unsigned int r,unsigned int c)
   for ( unsigned int i = 0 ; i < r  ; i++ )
   {
     grid[i].resize(c);
-    fill(grid[i].begin(),grid[i].end(),0);
+    fill(grid[i].begin(), grid[i].end(), 0);
   }
   
 }
@@ -90,7 +90,7 @@ void grid_map::get_points(vector<point>& p) const
 
   np = 0;
   for ( i = 0 ; i < rows ; i++ )
-    np+=count(grid[i].begin(),grid[i].end(),occupied_cell); 
+    np += count(grid[i].begin(), grid[i].end(), occupied_cell); 
   
   p.resize(np);
   pos = 0;
@@ -106,7 +106,7 @@ void grid_map::get_points(vector<point>& p) const
 
 
 // TESTED: OK
-int grid_map::load_map(unsigned int r,unsigned int c,const char* fname)
+int grid_map::load_map(unsigned int r, unsigned int c, const char* fname)
 {
 
   resize_map(r,c);

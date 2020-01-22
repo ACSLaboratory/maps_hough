@@ -33,7 +33,7 @@
 */
 
 
-#include "grid_map.h"
+#include "maps_hough/grid_map.hpp"
 
 #include <climits>
 
