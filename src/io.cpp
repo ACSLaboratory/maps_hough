@@ -36,14 +36,11 @@
 #include <iterator>
 
 
-
-using namespace std;
-
 namespace mapmerge
 {
 
 
-ostream& operator<<(ostream& os,const point& p)
+std::ostream& operator<<(std::ostream& os, const point& p)
 {
 
   os << static_cast<unsigned int>(p.r) << " " << static_cast<unsigned int>(p.c);
@@ -52,14 +49,14 @@ ostream& operator<<(ostream& os,const point& p)
 }
 
 template<class T>
-int generic_save(vector<T> v,const char* fname)
+int generic_save(std::vector<T> v, const char* fname)
 {
-    ofstream of(fname);
+    std::ofstream of(fname);
     if ( ! of ) 
       return 1;
     
-    ostream_iterator<T> output(of, "\n");
-    copy(v.begin(),v.end(),output);
+    std::ostream_iterator<T> output(of, "\n");
+    copy(v.begin(), v.end(), output);
 
     of.close();
     return 0;

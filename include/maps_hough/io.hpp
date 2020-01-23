@@ -55,7 +55,7 @@ namespace mapmerge
   @return the output stream, as required by the operator 
     
 */
-std::ostream& operator<<(std::ostream& os,const point& p);
+std::ostream& operator<<(std::ostream& os, const point& p);
 
 /*! 
   \fn template<class T> int generic_save(std::vector<T>,const char*);
@@ -66,7 +66,7 @@ std::ostream& operator<<(std::ostream& os,const point& p);
   @return 0 if success, 1 if it was not possible to open the file
  */
 template<class T>
-int generic_save(std::vector<T>,const char*);
+int generic_save(std::vector<T>, const char*);
 
 }
 

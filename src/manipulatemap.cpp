@@ -46,7 +46,6 @@
 #include <opencv/highgui.h>
 #include <iterator>
 
-using namespace std;
 
 namespace mapmerge {
 
@@ -61,11 +60,11 @@ float deg_to_rad(float d) {
 }
 
 template<class T>
-void generic_save(vector<T> v, const char* fname) 
+void generic_save(std::vector<T> v, const char* fname) 
 {
-  ofstream of(fname);
+  std::ofstream of(fname);
     
-  ostream_iterator<T> output(of, "\n");
+  std::ostream_iterator<T> output(of, "\n");
   copy(v.begin(),v.end(),output);
 
 }
@@ -74,10 +73,10 @@ void generic_save(vector<T> v, const char* fname)
 void print_matrix(const CvMat *m, const char * s)
 {
 
-  cout << "Printing " << s << endl;
-  cout << cvmGet(m,0,0) << " " << cvmGet(m,0,1) << " " << cvmGet(m,0,2) << endl;
-  cout << cvmGet(m,1,0) << " " << cvmGet(m,1,1) << " " << cvmGet(m,1,2) << endl;
-  cout << cvmGet(m,2,0) << " " << cvmGet(m,2,1) << " " << cvmGet(m,2,2) << endl;
+  std::cout << "Printing " << s << std::endl;
+  std::cout << cvmGet(m,0,0) << " " << cvmGet(m,0,1) << " " << cvmGet(m,0,2) << std::endl;
+  std::cout << cvmGet(m,1,0) << " " << cvmGet(m,1,1) << " " << cvmGet(m,1,2) << std::endl;
+  std::cout << cvmGet(m,2,0) << " " << cvmGet(m,2,1) << " " << cvmGet(m,2,2) << std::endl;
 
 }
 
@@ -312,7 +311,7 @@ void save_map_to_file(const grid_map& inmap, const char*fn)
 }
 
 
-ostream& operator<<(ostream& os, transformation& t)
+std::ostream& operator<<(std::ostream& os, transformation& t)
 {
 
     os << t.deltax << " " << t.deltay << " " << t.rotation << " " << t.ai;
@@ -329,7 +328,7 @@ static int my_compare(const transformation a, const transformation b)
 
 
 // This is the more robust (but also slower) version 
-vector<transformation> get_hypothesis_robust(const grid_map& map0,
+std::vector<transformation> get_hypothesis_robust(const grid_map& map0,
 					     const grid_map& map2,
 					     unsigned int n_hypothesis,
 					     unsigned int hough_increment,
@@ -337,10 +336,10 @@ vector<transformation> get_hypothesis_robust(const grid_map& map0,
 					     float fraction) 
 {
   
-  cout << "THIS ROUBST VERSION DOES NOT USE THE FAST SPECTRUM ACCELERATIONS" << endl;
+  std::cout << "THIS ROUBST VERSION DOES NOT USE THE FAST SPECTRUM ACCELERATIONS" << std::endl;
 
   unsigned int i;
-  vector<transformation> hypothesis;
+  std::vector<transformation> hypothesis;
   hypothesis.resize(3*n_hypothesis);
 
   // timeval tp1,tp2;
@@ -350,7 +349,7 @@ vector<transformation> get_hypothesis_robust(const grid_map& map0,
   cast_image_bw(g0,map0);
   cast_image_bw(g2,map2);
 
-  vector<point> p0, p1, p2;
+  std::vector<point> p0, p1, p2;
   g0.get_points(p0);
   g2.get_points(p2);
 
@@ -359,7 +358,7 @@ vector<transformation> get_hypothesis_robust(const grid_map& map0,
   rhoscale1 = find_max_coordinate(p0);
   rhoscale2 = find_max_coordinate(p2);
 
-  rhoscale = 2 * max(rhoscale1,rhoscale2);
+  rhoscale = 2 * std::max(rhoscale1,rhoscale2);
 
   grid_map HT0, HT1, HT2;
 
@@ -383,7 +382,7 @@ vector<transformation> get_hypothesis_robust(const grid_map& map0,
   // HT0.save_map("cHT0.txt");
   // HT2.save_map("cHT2.txt");
 
-  vector<float> HTSpectrum0, HTSpectrum1, HTSpectrum2, CrossSpectra;
+  std::vector<float> HTSpectrum0, HTSpectrum1, HTSpectrum2, CrossSpectra;
   compute_Hough_spectrum(HT0, HTSpectrum0);
   
   float outtx, outty;
@@ -435,14 +434,14 @@ vector<transformation> get_hypothesis_robust(const grid_map& map0,
 
   circular_cross_correlation(CrossSpectra, HTSpectrum1, HTSpectrum2);
 
-  vector<unsigned int> maxima(n_hypothesis);
+  std::vector<unsigned int> maxima(n_hypothesis);
   find_local_maxima_circular(maxima, CrossSpectra, n_hypothesis);
 
-  vector<int> rotationEstimatePrel(n_hypothesis);
+  std::vector<int> rotationEstimatePrel(n_hypothesis);
   for (  i = 0 ; i < n_hypothesis ; i++ )
     rotationEstimatePrel[i] = (int)round((float)(maxima[i]) * 360 / theta_cells);
 
-  vector<int> rotationEstimate(n_hypothesis*3);
+  std::vector<int> rotationEstimate(n_hypothesis*3);
 
   for ( i = 0 ; i < n_hypothesis ; i++ )
   {
@@ -454,8 +453,8 @@ vector<transformation> get_hypothesis_robust(const grid_map& map0,
   n_hypothesis *= 3;
 
   grid_map imrot, intermediatemap, intermediatemap2, imtrans, resultmap;
-  vector<float> XSpectrum1, YSpectrum1, XSpectrum2, YSpectrum2;
-  vector<float> crossX, crossY;
+  std::vector<float> XSpectrum1, YSpectrum1, XSpectrum2, YSpectrum2;
+  std::vector<float> crossX, crossY;
   int mx, my, deltax, deltay;
   transformation tmp_trans;
 
@@ -566,7 +565,7 @@ vector<transformation> get_hypothesis_robust(const grid_map& map0,
 
 
 // This is the basic  version 
-vector<transformation> get_hypothesis(const grid_map& map0,
+std::vector<transformation> get_hypothesis(const grid_map& map0,
 				      const grid_map& map2,
 				      unsigned int n_hypothesis,
 				      unsigned int hough_increment,
@@ -575,7 +574,7 @@ vector<transformation> get_hypothesis(const grid_map& map0,
 {
   
   unsigned int i;
-  vector<transformation> hypothesis;
+  std::vector<transformation> hypothesis;
   hypothesis.resize(n_hypothesis);
 
   // timeval tp1,tp2;
@@ -585,7 +584,7 @@ vector<transformation> get_hypothesis(const grid_map& map0,
   cast_image_bw(g0, map0);
   cast_image_bw(g2, map2);
 
-  vector<point> p0, p1, p2;
+  std::vector<point> p0, p1, p2;
   g0.get_points(p0);
   g2.get_points(p2);
 
@@ -596,7 +595,7 @@ vector<transformation> get_hypothesis(const grid_map& map0,
   rhoscale1 = find_max_coordinate(p0);
   rhoscale2 = find_max_coordinate(p2);
 
-  rhoscale = 2 * max(rhoscale1, rhoscale2);
+  rhoscale = 2 * std::max(rhoscale1, rhoscale2);
 
   grid_map HT0, HT1, HT2;
 
@@ -613,12 +612,12 @@ vector<transformation> get_hypothesis(const grid_map& map0,
     compute_Hough_transform(HT2,p2,theta_cells,rho_cells,rhoscale,hough_increment);
   }
   
-  vector<float> HTSpectrum0, HTSpectrum1, HTSpectrum2, CrossSpectra;
+  std::vector<float> HTSpectrum0, HTSpectrum1, HTSpectrum2, CrossSpectra;
   compute_Hough_spectrum(HT0, HTSpectrum0);
   
   float outtx, outty;
   
-  int adjustment = max_element(HTSpectrum0.begin(), HTSpectrum0.end()) - HTSpectrum0.begin();
+  int adjustment = std::max_element(HTSpectrum0.begin(), HTSpectrum0.end()) - HTSpectrum0.begin();
   float adjustment_rotation = float(adjustment) * 360 / theta_cells;
   // rotate_map(g1, g0, (int)round(adjustment_rotation), g1.get_free_cell(), outtx, outty);
   rotate_map(map1, map0, (int)adjustment_rotation, map1.get_unknown_cell(), outtx, outty);
@@ -663,17 +662,17 @@ vector<transformation> get_hypothesis(const grid_map& map0,
 
   circular_cross_correlation(CrossSpectra, HTSpectrum1, HTSpectrum2);
 
-  vector<unsigned int> maxima(n_hypothesis);
+  std::vector<unsigned int> maxima(n_hypothesis);
   find_local_maxima_circular(maxima, CrossSpectra, n_hypothesis);
 
-  vector<int> rotationEstimate(n_hypothesis);
+  std::vector<int> rotationEstimate(n_hypothesis);
   for (  i = 0 ; i < n_hypothesis ; i++ )
     rotationEstimate[i] = (int)round((float)(maxima[i]) * 360 / theta_cells);
 
 
   grid_map imrot, intermediatemap, intermediatemap2, imtrans, resultmap;
-  vector<float> XSpectrum1, YSpectrum1, XSpectrum2, YSpectrum2, XSpectrumFast, YSpectrumFast;
-  vector<float> crossX, crossY;
+  std::vector<float> XSpectrum1, YSpectrum1, XSpectrum2, YSpectrum2, XSpectrumFast, YSpectrumFast;
+  std::vector<float> crossX, crossY;
   int mx, my, deltax, deltay;
   transformation tmp_trans;
 

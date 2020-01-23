@@ -42,7 +42,7 @@ unsigned long int compute_time(const timeval& start, const timeval& end)
 
   unsigned long int retval = 0;
 
-  retval = ( ( end.tv_sec - start.tv_sec )*1000000 + 
+  retval = ( ( end.tv_sec - start.tv_sec ) * 1000000 + 
 	     ( end.tv_usec - start.tv_usec ) ) / 1000;
 
   return retval;

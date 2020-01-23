@@ -40,7 +40,6 @@
 #include <fstream>
 #include <iostream>
 
-using namespace std;
 
 namespace mapmerge
 {
@@ -83,10 +82,10 @@ void grid_map::resize_map(unsigned int r, unsigned int c)
 
 
 // TESTED OK
-void grid_map::get_points(vector<point>& p) const
+void grid_map::get_points(std::vector<point>& p) const
 {
 
-  unsigned int np,i,j,pos;
+  unsigned int np, i, j, pos;
 
   np = 0;
   for ( i = 0 ; i < rows ; i++ )
@@ -111,7 +110,7 @@ int grid_map::load_map(unsigned int r, unsigned int c, const char* fname)
 
   resize_map(r,c);
 
-  ifstream ifs(fname);
+  std::ifstream ifs(fname);
 
   if ( ! ifs ) 
     return 1;
@@ -134,7 +133,7 @@ int grid_map::load_map(unsigned int r, unsigned int c, const char* fname)
 int grid_map::save_map(const char *fname)
 {
 
-  ofstream ofs(fname);
+  std::ofstream ofs(fname);
   if (! ofs ) 
     return 1;
 
@@ -144,7 +143,7 @@ int grid_map::save_map(const char *fname)
     {
       ofs << static_cast<unsigned int>(grid[i][j]) << " ";
     }
-    ofs << endl;
+    ofs << std::endl;
   }
   
   ofs.close();

@@ -45,28 +45,27 @@
 
 #include <sys/time.h>
 
-using namespace std;
 using namespace mapmerge;
 
 const unsigned int n_hypothesis = 4;
 
-int main(int argc,char **argv)
+int main(int argc, char **argv)
 {
   
-  char file1[] = "datasets/LongRun6.txt";
-  char file2[] = "datasets/LongRun7.txt";
+  char file1[] = "/home/zmk5/ROS2/ragesh_ws/src/maps_hough/datasets/LongRun6.txt";
+  char file2[] = "/home/zmk5/ROS2/ragesh_ws/src/maps_hough/datasets/LongRun7.txt";
     
 
-  cout << "Loading " << file1 << " and " << file2 << endl;
+  std::cout << "Loading " << file1 << " and " << file2 << std::endl;
   grid_map a,b;
   a.load_map(900,900,file1);
   b.load_map(900,900,file2);
 	   
   
-  vector<transformation> hyp = get_hypothesis(a,b,n_hypothesis,1,false);
+  std::vector<transformation> hyp = get_hypothesis(a,b,n_hypothesis,1,false);
     
   for ( unsigned int i = 0 ; i < n_hypothesis ; i++ )
-    cout << hyp[i].ai << " " << hyp[i].deltax << " " << hyp[i].deltay << " " <<  hyp[i].rotation << endl;
+    std::cout << hyp[i].ai << " " << hyp[i].deltax << " " << hyp[i].deltay << " " <<  hyp[i].rotation << std::endl;
     
 
   return 0;
