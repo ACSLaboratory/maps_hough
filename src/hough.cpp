@@ -163,7 +163,7 @@ void compute_Randomized_Hough_transform(grid_map& HT,
   unsigned int s = p.size();
   unsigned int number_of_points = (unsigned int)round(s * fraction); 
 
-  unsigned int *indexes = new unsigned int [number_of_points];
+  std::unique_ptr<unsigned int[]> indexes(new unsigned int[number_of_points]);
  
   
   for ( i = 0 ; i < number_of_points ; i++ ) 
@@ -192,7 +192,6 @@ void compute_Randomized_Hough_transform(grid_map& HT,
     
   }
 
-  delete[] indexes;
 
 } 
 
