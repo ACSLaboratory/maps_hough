@@ -33,12 +33,12 @@
 */
 
 /*!
-  \file common.h
+  \file common.hpp
   \brief General purpose data types and functions  that do not fit anywhere else
  */
 
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef MAPS_HOUGH_COMMON_HPP
+#define MAPS_HOUGH_COMMON_HPP
 
 #include <sys/time.h>
 
@@ -67,4 +67,4 @@ unsigned long int compute_time(const timeval& start,const timeval& end);
 
 }
 
-#endif
+#endif  // MAPS_HOUGH_COMMON_HPP

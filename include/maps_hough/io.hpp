@@ -32,12 +32,12 @@
 
 */
 
-/*! \file io.h
+/*! \file io.hpp
   \brief Simple io routines. Mainly needed for debugging purposes.
  */
 
-#ifndef IO_H
-#define IO_H
+#ifndef MAPS_HOUGH_IO_HPP
+#define MAPS_HOUGH_IO_HPP
 
 #include "maps_hough/common.hpp"
 #include <vector>
@@ -70,4 +70,4 @@ int generic_save(std::vector<T>, const char*);
 
 }
 
-#endif
+#endif  // MAPS_HOUGH_IO_HPP

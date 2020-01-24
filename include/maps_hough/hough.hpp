@@ -37,8 +37,8 @@
   \brief Routines to compute Hough transforms and related concepts
  */
 
-#ifndef HOUGH_H
-#define HOUGH_H
+#ifndef MAPS_HOUGH_HOUGH_HPP
+#define MAPS_HOUGH_HOUGH_HPP
 
 #include <vector>
 #include "maps_hough/common.hpp"
@@ -145,4 +145,4 @@ void extract_spectrum_xy_fast(std::vector<float>& out, const std::vector<point> 
 
 }
 
-#endif
+#endif  // MAPS_HOUGH_HOUGH_HPP

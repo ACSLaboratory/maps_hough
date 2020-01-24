@@ -40,8 +40,8 @@
 */
 
 
-#ifndef MANIPULATE_MAP
-#define MANIPULATE_MAP
+#ifndef MAPS_HOUGH_MANIPULATE_MAP_HPP
+#define MAPS_HOUGH_MANIPULATE_MAP_HPP
 
 #include "maps_hough/grid_map.hpp"
 #include <list>
@@ -212,4 +212,4 @@ float acceptance_index(const grid_map&, const grid_map&);
 
 }
 
-#endif
+#endif  // MAPS_HOUGH_MANIPULATEMAP_HPP

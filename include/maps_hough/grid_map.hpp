@@ -32,8 +32,8 @@
 
 */
 
-#ifndef GRID_MAP
-#define GRID_MAP
+#ifndef MAPS_HOUGH_GRID_MAP_HPP
+#define MAPS_HOUGH_GRID_MAP_HPP
 
 #include <vector>
 
@@ -150,4 +150,4 @@ public:
 
 }
 
-#endif
+#endif  // MAPS_HOUGH_GRID_MAPP_HPP
