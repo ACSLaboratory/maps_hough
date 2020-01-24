@@ -63,7 +63,7 @@ struct point
   @param end end time
   @return time elapsed in milliseconds
  */
-unsigned long int compute_time(const timeval& start,const timeval& end);
+unsigned long int compute_time(const timeval& start, const timeval& end);
 
 }
 

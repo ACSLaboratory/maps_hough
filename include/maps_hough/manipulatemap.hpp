@@ -54,7 +54,7 @@ namespace mapmerge
     @param out modified map
     @param in map to modify
    */
-void cast_image_bw(grid_map& out,const grid_map& in);
+void cast_image_bw(grid_map& out, const grid_map& in);
 
 /*!
   Creates a new map by translating an existing one. The new one have the same
@@ -65,7 +65,7 @@ are initialized to the unknownn status
 @param dx translation along the x axis (columns)
 @param dy translation along the y axis (rows)
  */
-void translate_map(grid_map& out,const grid_map& in,int dx,int dy);
+void translate_map(grid_map& out, const grid_map& in, int dx, int dy);
 
  /*!
    Creates a new map rotating an existing one. Rotation is performed about the center
@@ -77,7 +77,7 @@ void translate_map(grid_map& out,const grid_map& in,int dx,int dy);
    @param outtx column coordinate of the center
    @param outty row coordinate of the center
  */
-void rotate_map(grid_map& out,const grid_map& in,int thetaDeg,unsigned char filler,float& outtx,float& outty);
+void rotate_map(grid_map& out, const grid_map& in, int thetaDeg, unsigned char filler, float& outtx, float& outty);
 
 /*! 
   Checks if the given grid_map is valid, i.e. if it contains only cells whose status is
@@ -103,7 +103,7 @@ void restore_map(grid_map& in);
   @param m1 first map
   @param m2 second map
  */
-void overlap_maps(grid_map& out,const grid_map& m1,const grid_map& m2);
+void overlap_maps(grid_map& out, const grid_map& m1, const grid_map& m2);
 
 /*!
   Saves the map to a given file in graphical formt. The filename extension determines 
@@ -112,7 +112,7 @@ void overlap_maps(grid_map& out,const grid_map& m1,const grid_map& m2);
   @param to_save map to save
   @param fn file name to use
  */
-void save_map_to_file(const grid_map& to_save,const char* fn);
+void save_map_to_file(const grid_map& to_save, const char* fn);
 
 /*!
   Produces a new map by roto-translating an existing one.

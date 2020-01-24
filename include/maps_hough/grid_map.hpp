@@ -40,7 +40,7 @@
 #include "maps_hough/common.hpp"
 
 /*!
-\file grid_map.h
+\file grid_map.hpp
 \brief Declaration of the grid_map class 
  */
 
@@ -64,7 +64,7 @@ class grid_map
   
   unsigned int rows;
   unsigned int cols;
-  unsigned char free_cell,occupied_cell,unknown_cell;
+  unsigned char free_cell, occupied_cell, unknown_cell;
   
 
 public:
@@ -79,7 +79,7 @@ public:
     @param r: number of rows
     @param c: number of columns
    */
-  grid_map(unsigned int r,unsigned int c);
+  grid_map(unsigned int r, unsigned int c);
   //~grid_map(); 
   
   /*! Returns the number of rows in the map */ 
@@ -105,7 +105,7 @@ public:
  /*! Sets the value used to encode unknown cells 
      @param u new value for free cells
   */
-  void set_unknown_cell(unsigned char u ) { unknown_cell = u; };
+  void set_unknown_cell(unsigned char u) { unknown_cell = u; };
   
   /*!
     Copies the coordinates of all occupied grid cells into v. 
@@ -117,7 +117,7 @@ public:
     @param r new number of rows
     @param c new number of columns
    */
-  void resize_map(unsigned int r,unsigned int c);
+  void resize_map(unsigned int r, unsigned int c);
   
   /*!
     Loads a grid map from an ascii file. 
@@ -128,7 +128,7 @@ public:
     @param fn file name
     @return 0 if correctly loaded, 1 if the file could not be opened
    */
-  int load_map(unsigned int r,unsigned int c,const char*fn);
+  int load_map(unsigned int r, unsigned int c, const char *fn);
 
   /*!
     Saves the grid map into an ascii file.
@@ -144,7 +144,7 @@ public:
     without getting through getter/setter methods. You should never resize this
     structure directly, but rather use the resize method.
    */
-  std::vector<std::vector<unsigned int> > grid; // ugly, but only for efficiency reasons
+  std::vector< std::vector<unsigned int> > grid; // ugly, but only for efficiency reasons
   
 };
 
