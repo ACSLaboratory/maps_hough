@@ -47,13 +47,14 @@ namespace mapmerge
 grid_map::grid_map()
 {
 
-  resize_map(10,10);
+  resize_map(10, 10);
   
   set_free_cell(255);
   set_occupied_cell(0);
   set_unknown_cell(127);
 
 }
+
 
 grid_map::grid_map(unsigned int r, unsigned int c)
 {
@@ -65,6 +66,7 @@ grid_map::grid_map(unsigned int r, unsigned int c)
   set_unknown_cell(127);
   
 }
+
 
 void grid_map::resize_map(unsigned int r, unsigned int c)
 {
@@ -129,6 +131,7 @@ int grid_map::load_map(unsigned int r, unsigned int c, const char* fname)
 
 }
 
+
 // TESTED: OK
 int grid_map::load_map(unsigned int r, unsigned int c, std::string fname)
 {
@@ -153,6 +156,7 @@ int grid_map::load_map(unsigned int r, unsigned int c, std::string fname)
   return 0;
 
 }
+
 
 // TESTED: OK
 int grid_map::save_map(const char *fname)
