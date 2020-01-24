@@ -35,6 +35,7 @@
 #ifndef MAPS_HOUGH_GRID_MAP_HPP
 #define MAPS_HOUGH_GRID_MAP_HPP
 
+#include <string>
 #include <vector>
 
 #include "maps_hough/common.hpp"
