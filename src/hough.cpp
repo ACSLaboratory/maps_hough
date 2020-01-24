@@ -192,7 +192,7 @@ void compute_Randomized_Hough_transform(grid_map& HT,
     
   }
 
-  delete indexes;
+  delete[] indexes;
 
 } 
 
