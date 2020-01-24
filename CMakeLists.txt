@@ -22,12 +22,13 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(OpenCV 3 REQUIRED)
+find_package(ament_index_cpp REQUIRED)
 
 include_directories(include)
 ament_export_include_directories(include)
 
 add_executable(hough_test src/test.cpp src/grid_map.cpp src/io.cpp src/common.cpp src/hough.cpp src/manipulatemap.cpp)
-ament_target_dependencies(hough_test rclcpp OpenCV)
+ament_target_dependencies(hough_test rclcpp ament_index_cpp OpenCV)
 
 install(TARGETS
   hough_test

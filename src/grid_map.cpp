@@ -130,6 +130,31 @@ int grid_map::load_map(unsigned int r, unsigned int c, const char* fname)
 }
 
 // TESTED: OK
+int grid_map::load_map(unsigned int r, unsigned int c, std::string fname)
+{
+
+  resize_map(r, c);
+
+  std::ifstream ifs(fname);
+
+  if ( ! ifs ) 
+    return 1;
+  
+  unsigned int i,j;
+  unsigned int tmp;
+  for ( i = 0 ; i < r ; i++ )
+    for ( j = 0 ; j < c ; j++ )
+    {
+      ifs >> tmp;
+      grid[i][j] = static_cast<unsigned int>(tmp);
+    }
+  ifs.close();
+
+  return 0;
+
+}
+
+// TESTED: OK
 int grid_map::save_map(const char *fname)
 {
 

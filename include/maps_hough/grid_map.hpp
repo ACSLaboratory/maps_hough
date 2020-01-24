@@ -131,6 +131,17 @@ public:
   int load_map(unsigned int r, unsigned int c, const char *fn);
 
   /*!
+    Loads a grid map from an ascii file (std::string).
+    Values in the file must be organized into a table with space separated values. The grid map
+    is accordingly resized and its former contents lost
+    @param r number of rows
+    @param c number of columns
+    @param fn file name
+    @return 0 if correctly loaded, 1 if the file could not be opened
+   */
+  int load_map(unsigned int r, unsigned int c, std::string fn);
+
+  /*!
     Saves the grid map into an ascii file.
     Values are stored in an ascii table with space separated values
     @param fn: file name

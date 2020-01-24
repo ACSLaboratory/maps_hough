@@ -45,21 +45,24 @@
 
 #include <sys/time.h>
 
+#include <ament_index_cpp/get_package_share_directory.hpp>
+
+
 using namespace mapmerge;
 
 const unsigned int n_hypothesis = 4;
 
-int main(int argc, char **argv)
+int main()
 {
-  
-  char file1[] = "/home/zmk5/ROS2/ragesh_ws/src/maps_hough/datasets/LongRun6.txt";
-  char file2[] = "/home/zmk5/ROS2/ragesh_ws/src/maps_hough/datasets/LongRun7.txt";
+  std::string package_share_directory = ament_index_cpp::get_package_share_directory("maps_hough");
+  std::string file1 = package_share_directory + "/datasets/LongRun6.txt";
+  std::string file2 = package_share_directory + "/datasets/LongRun7.txt";
     
 
   std::cout << "Loading " << file1 << " and " << file2 << std::endl;
-  grid_map a,b;
-  a.load_map(900,900,file1);
-  b.load_map(900,900,file2);
+  grid_map a, b;
+  a.load_map(900, 900, file1);
+  b.load_map(900, 900, file2);
 	   
   
   std::vector<transformation> hyp = get_hypothesis(a,b,n_hypothesis,1,false);
