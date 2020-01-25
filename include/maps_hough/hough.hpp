@@ -41,6 +41,7 @@
 #define MAPS_HOUGH_HOUGH_HPP
 
 #include <vector>
+
 #include "maps_hough/common.hpp"
 #include "maps_hough/grid_map.hpp"
 

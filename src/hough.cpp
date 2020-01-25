@@ -36,7 +36,7 @@
 #include "maps_hough/grid_map.hpp"
 
 #include <climits>
-
+#include <memory>
 #include <cmath>
 #include <algorithm>
 #include <string>
@@ -97,11 +97,12 @@ void compute_Hough_transform(grid_map& HT,
 {
 
   float thetainc = 2* M_PI /thetasub,theta,rho,rhos;
-  HT.resize_map(rhosub,thetasub);
+  const unsigned int thetasub_size = thetasub;
+  HT.resize_map(rhosub, thetasub);
   unsigned int i, j, np;
   int rho_index;
-  float costable[thetasub];
-  float sintable[thetasub];
+  float costable[thetasub_size];
+  float sintable[thetasub_size];
   
   theta = thetainc;
   for ( j = 0 ; j < thetasub; j++ )
