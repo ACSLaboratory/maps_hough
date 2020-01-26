@@ -58,7 +58,6 @@ int main()
   std::string file1 = package_share_directory + "/datasets/LongRun6.txt";
   std::string file2 = package_share_directory + "/datasets/LongRun7.txt";
     
-
   std::cout << "Loading " << file1 << " and " << file2 << std::endl;
   grid_map a, b;
   a.load_map(900, 900, file1);

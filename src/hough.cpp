@@ -97,20 +97,15 @@ void compute_Hough_transform(grid_map& HT,
 			     unsigned int hough_increment)
 {
 
-  float thetainc = 2* M_PI /thetasub,theta,rho,rhos;
+  float thetainc = 2* M_PI / thetasub; 
+  float theta, rho, rhos;
   HT.resize_map(rhosub, thetasub);
   unsigned int i, j, np;
   int rho_index;
 
   // Set and initialize COS and SIN table
-  std::vector<float> costable;
-  std::vector<float> sintable;
-
-  for (unsigned int k = 0; k < thetasub; k++)
-  {
-    costable.push_back(0.0);
-    sintable.push_back(0.0);
-  }
+  std::vector<float> costable(thetasub, 0.0);
+  std::vector<float> sintable(thetasub, 0.0);
   
   theta = thetainc;
   for ( j = 0 ; j < thetasub; j++ )
@@ -160,14 +155,8 @@ void compute_Randomized_Hough_transform(grid_map& HT,
   int rho_index;
 
   // Set COS and SIN table
-  std::vector<float> costable;
-  std::vector<float> sintable;
-
-  for (unsigned int k = 0; k < thetasub; k++)
-  {
-    costable.push_back(0.0);
-    sintable.push_back(0.0);
-  }
+  std::vector<float> costable(thetasub, 0.0);
+  std::vector<float> sintable(thetasub, 0.0);
   
   theta = thetainc;
   for ( j = 0 ; j < thetasub; j++ )
@@ -216,7 +205,7 @@ void compute_Randomized_Hough_transform(grid_map& HT,
 void compute_Hough_spectrum(const grid_map& HT, std::vector<float>& HS) {
 
   HS.resize(HT.get_cols());
-  std::fill(HS.begin(), HS.end(),0);
+  std::fill(HS.begin(), HS.end(), 0);
   unsigned int i, j;
   unsigned int r = HT.get_rows();
   unsigned int c = HT.get_cols();
@@ -228,7 +217,7 @@ void compute_Hough_spectrum(const grid_map& HT, std::vector<float>& HS) {
 
   float max = *(std::max_element(HS.begin(), HS.end()));
 
-  for (  i = 0 ; i < HS.size() ; i++ ) 
+  for ( i = 0 ; i < HS.size() ; i++ ) 
     HS[i] /= max;
 
 }
@@ -242,7 +231,7 @@ void circular_cross_correlation(std::vector<float>& result, const std::vector<fl
   assert(a.size() == b.size());
   s = a.size();
   result.resize(s);
-  fill(result.begin(), result.end(),0);
+  fill(result.begin(), result.end(), 0);
 
   for ( i = 0 ; i < s ; i++ )
   {
@@ -257,7 +246,7 @@ void circular_cross_correlation(std::vector<float>& result, const std::vector<fl
   ma = *(max_element(result.begin(), result.end()));
 	 
   for ( i = 0 ; i < s ; i++ )
-    result[i] = (result[i] - mi ) / ( ma - mi );
+    result[i] = ( result[i] - mi ) / ( ma - mi );
 
 }
 
@@ -266,7 +255,8 @@ bool operator<(const std::pair<unsigned int,float>& a, const std::pair<unsigned 
 
   if ( a.first < b.first )
     return false;
-  else return true;
+  else
+    return true;
 
 }
 
@@ -275,7 +265,8 @@ int my_compare(std::pair<unsigned int,float> a, std::pair<unsigned int,float> b)
 {
     if ( a.second > b.second )
 	    return true;
-    else return false;
+    else
+      return false;
 
 }
 
@@ -286,8 +277,8 @@ void find_local_maxima_circular(std::vector<unsigned int>& maxima, const std::ve
 
   unsigned int i, j;
   unsigned int s = seq.size();
-  std::vector<float> ex(s+2);
-  std::vector<float> m(s+2);
+  std::vector<float> ex(s+2, 0.0);
+  std::vector<float> m(s+2, 0.0);
 
   ex[0] = seq[s-1];
   for ( i = 1 , j = 0 ; j < s ; j++ , i++ )
