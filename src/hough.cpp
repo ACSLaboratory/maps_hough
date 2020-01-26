@@ -301,7 +301,7 @@ void find_local_maxima_circular(std::vector<unsigned int>& maxima, const std::ve
     }
 
   // THIS NEEDS TO BE FIXED
-  sort(max_pos.begin(),max_pos.end(),my_compare);
+  sort(max_pos.begin(), max_pos.end(), my_compare);
 
 
   if ( n_max < nh ) 
@@ -463,7 +463,7 @@ void cross_correlation(std::vector<float>& out, const std::vector<float>& v1, co
   float max = *(max_element(out.begin(), out.end()));
 
   for ( unsigned int i = 0 ; i < outsize ; i++ )
-    out[i] /=max;
+    out[i] /= max;
   
 }
 
