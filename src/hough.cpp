@@ -44,6 +44,7 @@
 #include <iterator>
 #include <fstream>
 #include <cassert>
+#include <array>
 
 
 namespace mapmerge
@@ -97,12 +98,19 @@ void compute_Hough_transform(grid_map& HT,
 {
 
   float thetainc = 2* M_PI /thetasub,theta,rho,rhos;
-  const unsigned int thetasub_size = thetasub;
   HT.resize_map(rhosub, thetasub);
   unsigned int i, j, np;
   int rho_index;
-  float costable[thetasub_size];
-  float sintable[thetasub_size];
+
+  // Set and initialize COS and SIN table
+  std::vector<float> costable;
+  std::vector<float> sintable;
+
+  for (unsigned int k = 0; k < thetasub; k++)
+  {
+    costable.push_back(0.0);
+    sintable.push_back(0.0);
+  }
   
   theta = thetainc;
   for ( j = 0 ; j < thetasub; j++ )
@@ -150,8 +158,16 @@ void compute_Randomized_Hough_transform(grid_map& HT,
   HT.resize_map(rhosub,thetasub);
   unsigned int i,j,np;
   int rho_index;
-  float costable[thetasub];
-  float sintable[thetasub];
+
+  // Set COS and SIN table
+  std::vector<float> costable;
+  std::vector<float> sintable;
+
+  for (unsigned int k = 0; k < thetasub; k++)
+  {
+    costable.push_back(0.0);
+    sintable.push_back(0.0);
+  }
   
   theta = thetainc;
   for ( j = 0 ; j < thetasub; j++ )
