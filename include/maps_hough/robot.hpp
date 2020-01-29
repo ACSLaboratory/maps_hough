@@ -33,13 +33,16 @@
 class Robot : public rclcpp::Node
 {
 private:
-  uint robot_id_;
-  std::string robot_name_;
-  
-
+  uint id_;
+  std::string name_;
+  double sensing_radius_;
+  long int avoid_count, rand_count;
 
   // Publishers
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_cmd_vel_;
+
+  // Subscriptions
+  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr sub_laser_scan_;
 
   // Timer
   rclcpp::TimerBase::SharedPtr timer_;
@@ -49,8 +52,15 @@ public:
   Robot(uint robot_id_, std::string robot_name_, uint no_of_robots=1,
         double radial_noise=0.01,
         double sensing_radius_=0.40);
-  void move();
+
+  // Callbacks
   void timer_callback();
+  void laser_scan_callback(sensor_msgs::msg::LaserScan::SharedPtr msg);
+
+  // Robot Pose
+  double x;  // meters
+  double y;  // meters
+  double w;  // radians
 
 };
 
