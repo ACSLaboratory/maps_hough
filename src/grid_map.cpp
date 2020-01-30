@@ -59,7 +59,7 @@ grid_map::grid_map()
 grid_map::grid_map(unsigned int r, unsigned int c)
 {
   
-  resize_map(r,c);
+  resize_map(r, c);
   
   set_free_cell(255);
   set_occupied_cell(0);
@@ -83,7 +83,6 @@ void grid_map::resize_map(unsigned int r, unsigned int c)
 }
 
 
-// TESTED OK
 void grid_map::get_points(std::vector<point>& p) const
 {
 
@@ -106,11 +105,10 @@ void grid_map::get_points(std::vector<point>& p) const
 }
 
 
-// TESTED: OK
 int grid_map::load_map(unsigned int r, unsigned int c, const char* fname)
 {
 
-  resize_map(r,c);
+  resize_map(r, c);
 
   std::ifstream ifs(fname);
 
@@ -132,7 +130,6 @@ int grid_map::load_map(unsigned int r, unsigned int c, const char* fname)
 }
 
 
-// TESTED: OK
 int grid_map::load_map(unsigned int r, unsigned int c, std::string fname)
 {
 
@@ -158,7 +155,6 @@ int grid_map::load_map(unsigned int r, unsigned int c, std::string fname)
 }
 
 
-// TESTED: OK
 int grid_map::save_map(const char *fname)
 {
 

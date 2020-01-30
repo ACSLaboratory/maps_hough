@@ -19,7 +19,7 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
-#include "cv_bridge/cv_bridge.h"
+// #include "cv_bridge/cv_bridge.h"
 #include "tf2/utils.h"
 
 // Local header files
@@ -37,12 +37,14 @@ private:
   std::string name_;
   double sensing_radius_;
   long int avoid_count, rand_count;
+  sensor_msgs::msg::LaserScan scan_info_();
 
   // Publishers
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_cmd_vel_;
 
   // Subscriptions
   rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr sub_laser_scan_;
+  rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_abs_pose_;
 
   // Timer
   rclcpp::TimerBase::SharedPtr timer_;
@@ -61,6 +63,9 @@ public:
   double x;  // meters
   double y;  // meters
   double w;  // radians
+
+  // Grid map
+  mapmerge::grid_map g_map;
 
 };
 

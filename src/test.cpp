@@ -64,7 +64,7 @@ int main()
   b.load_map(900, 900, file2);
 	   
   
-  std::vector<transformation> hyp = get_hypothesis(a,b,n_hypothesis,1,false);
+  std::vector<transformation> hyp = get_hypothesis(a, b, n_hypothesis, 1, false);
     
   for ( unsigned int i = 0 ; i < n_hypothesis ; i++ )
     std::cout << hyp[i].ai << " " << hyp[i].deltax << " " << hyp[i].deltay << " " <<  hyp[i].rotation << std::endl;
