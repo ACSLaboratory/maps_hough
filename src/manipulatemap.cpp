@@ -42,8 +42,10 @@
 
 #include <iostream>
 
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include <opencv2/core/core_c.h>
+#include <opencv2/core/types_c.h>
+#include <opencv2/imgproc/imgproc_c.h>
+#include <opencv2/highgui/highgui_c.h>
 #include <iterator>
 
 
@@ -65,7 +67,7 @@ void generic_save(std::vector<T> v, const char* fname)
   std::ofstream of(fname);
     
   std::ostream_iterator<T> output(of, "\n");
-  copy(v.begin(),v.end(),output);
+  copy(v.begin(), v.end(), output);
 
 }
 
@@ -74,19 +76,21 @@ void print_matrix(const CvMat *m, const char * s)
 {
 
   std::cout << "Printing " << s << std::endl;
-  std::cout << cvmGet(m,0,0) << " " << cvmGet(m,0,1) << " " << cvmGet(m,0,2) << std::endl;
-  std::cout << cvmGet(m,1,0) << " " << cvmGet(m,1,1) << " " << cvmGet(m,1,2) << std::endl;
-  std::cout << cvmGet(m,2,0) << " " << cvmGet(m,2,1) << " " << cvmGet(m,2,2) << std::endl;
+  std::cout << cvmGet(m, 0, 0) << " " << cvmGet(m, 0, 1) << " " << cvmGet(m, 0, 2) << std::endl;
+  std::cout << cvmGet(m, 1, 0) << " " << cvmGet(m, 1, 1) << " " << cvmGet(m, 1, 2) << std::endl;
+  std::cout << cvmGet(m, 2, 0) << " " << cvmGet(m, 2, 1) << " " << cvmGet(m, 2, 2) << std::endl;
 
 }
 
 void restore_map(grid_map& m)
 {
 
-  unsigned int i,j,r = m.get_rows(), c = m.get_cols();
-  unsigned char free_cell = m.get_free_cell(), 
-  occupied_cell = m.get_occupied_cell(), 
-  unknown_cell = m.get_unknown_cell();
+  unsigned int i,j;
+  unsigned int r = m.get_rows();
+  unsigned int c = m.get_cols();
+  unsigned char free_cell = m.get_free_cell();
+  unsigned char occupied_cell = m.get_occupied_cell();
+  unsigned char unknown_cell = m.get_unknown_cell();
 
   unsigned int low_threshold = unknown_cell - THRESHOLD;
   unsigned int high_threshold = unknown_cell + THRESHOLD;
@@ -109,9 +113,10 @@ void restore_map(grid_map& m)
 void cast_image_bw(grid_map& out, const grid_map& in)
 {
 
-  int i,j;
-  int r = in.get_rows() , c = in.get_cols();
-  out.resize_map(r,c);
+  int i, j;
+  int r = in.get_rows();
+  int c = in.get_cols();
+  out.resize_map(r, c);
   unsigned char free_cell = in.get_free_cell(),
 	occupied_cell = in.get_occupied_cell();
 
@@ -191,7 +196,7 @@ void rotate_map(grid_map& outmap, const grid_map& inmap, int thetaDeg, unsigned 
   unsigned int r = inmap.get_rows();
   unsigned int c = inmap.get_cols();
 
-  IplImage* img = cvCreateImage(cvSize(c,r), 8, 1);
+  IplImage* img = cvCreateImage(cvSize(c, r), 8, 1);
 
   for ( i = 0 ; i < r ; i++ )
     for ( j = 0 ; j < c ; j++ )
@@ -215,12 +220,12 @@ void rotate_map(grid_map& outmap, const grid_map& inmap, int thetaDeg, unsigned 
 
   cvmSet(mat, 0, 2, outtx);
   cvmSet(mat, 1, 2, outty);
-  cvmSet(mat,0,0,cos(theta));
-  cvmSet(mat,1,1,cos(theta));
-  cvmSet(mat,0,1,-sin(theta));
-  cvmSet(mat,1,0,sin(theta));
+  cvmSet(mat, 0, 0, cos(theta));
+  cvmSet(mat, 1, 1, cos(theta));
+  cvmSet(mat, 0, 1, -sin(theta));
+  cvmSet(mat, 1, 0, sin(theta));
 
-  cvWarpAffine(img,dst,mat, CV_INTER_CUBIC + CV_WARP_FILL_OUTLIERS, cvScalarAll(filler));
+  cvWarpAffine(img, dst, mat, CV_INTER_CUBIC + CV_WARP_FILL_OUTLIERS, cvScalarAll(filler));
 
   outmap.resize_map(r,c);
 
@@ -243,14 +248,19 @@ void rotate_map(grid_map& outmap, const grid_map& inmap, int thetaDeg, unsigned 
 }
 
 // theta must be in degrees
-void raw_transform_map(grid_map& outmap, const grid_map& inmap, float thetaDeg, float tx, float ty, unsigned char filler)
+void raw_transform_map(grid_map& outmap,
+                       const grid_map& inmap,
+                       float thetaDeg,
+                       float tx,
+                       float ty,
+                       unsigned char filler)
 {
   
   unsigned int i, j;
   unsigned int r = inmap.get_rows();
   unsigned int c = inmap.get_cols();
 
-  IplImage* img = cvCreateImage(cvSize(c,r), 8, 1);
+  IplImage* img = cvCreateImage(cvSize(c, r), 8, 1);
 
   for ( i = 0 ; i < r ; i++ )
     for ( j = 0 ; j < c ; j++ )
@@ -260,21 +270,21 @@ void raw_transform_map(grid_map& outmap, const grid_map& inmap, float thetaDeg, 
   
   IplImage* dst = cvCreateImage(cvSize(c,r), 8, 1);
 
-  CvMat *mat = cvCreateMat(2,3,CV_32FC1);
+  CvMat *mat = cvCreateMat(2, 3, CV_32FC1);
   cvSetIdentity(mat);
 
   float theta = deg_to_rad(thetaDeg);
 
   cvmSet(mat, 0, 2, tx);
   cvmSet(mat, 1, 2, ty);
-  cvmSet(mat,0,0,cos(theta));
-  cvmSet(mat,1,1,cos(theta));
-  cvmSet(mat,0,1,-sin(theta));
-  cvmSet(mat,1,0,sin(theta));
+  cvmSet(mat, 0, 0, cos(theta));
+  cvmSet(mat, 1, 1, cos(theta));
+  cvmSet(mat, 0, 1, -sin(theta));
+  cvmSet(mat, 1, 0, sin(theta));
 
-  cvWarpAffine(img,dst,mat,CV_INTER_LINEAR + CV_WARP_FILL_OUTLIERS, cvScalarAll(filler));
+  cvWarpAffine(img, dst, mat, CV_INTER_LINEAR + CV_WARP_FILL_OUTLIERS, cvScalarAll(filler));
 
-  outmap.resize_map(r,c);
+  outmap.resize_map(r, c);
 
   for ( i = 0 ; i < r ; i++ )
     for ( j = 0 ; j < c ; j++ )
@@ -295,9 +305,11 @@ void raw_transform_map(grid_map& outmap, const grid_map& inmap, float thetaDeg, 
 void save_map_to_file(const grid_map& inmap, const char*fn)
 {
 
-  unsigned int i,j,r= inmap.get_rows(),c = inmap.get_cols();
+  unsigned int i, j;
+  unsigned int r = inmap.get_rows();
+  unsigned int c = inmap.get_cols();
     
-  IplImage* img = cvCreateImage(cvSize(c,r), 8, 1);
+  IplImage* img = cvCreateImage(cvSize(c, r), 8, 1);
   
   for ( i = 0 ; i < r ; i++ )
     for ( j = 0 ; j < c ; j++ )
@@ -305,7 +317,7 @@ void save_map_to_file(const grid_map& inmap, const char*fn)
       ((uchar*)(img->imageData + img->widthStep*i))[j] = inmap.grid[i][j];
     }
 
-  cvSaveImage(fn,img);
+  cvSaveImage(fn, img);
   cvReleaseImage(&img);
 
 }
@@ -314,8 +326,8 @@ void save_map_to_file(const grid_map& inmap, const char*fn)
 std::ostream& operator<<(std::ostream& os, transformation& t)
 {
 
-    os << t.deltax << " " << t.deltay << " " << t.rotation << " " << t.ai;
-    return os;
+  os << t.deltax << " " << t.deltay << " " << t.rotation << " " << t.ai;
+  return os;
 
 }
 
@@ -329,11 +341,11 @@ static int my_compare(const transformation a, const transformation b)
 
 // This is the more robust (but also slower) version 
 std::vector<transformation> get_hypothesis_robust(const grid_map& map0,
-					     const grid_map& map2,
-					     unsigned int n_hypothesis,
-					     unsigned int hough_increment,
-					     bool randomized,
-					     float fraction) 
+					                                        const grid_map& map2,
+					                                        unsigned int n_hypothesis,
+					                                        unsigned int hough_increment,
+					                                        bool randomized,
+					                                        float fraction) 
 {
   
   std::cout << "THIS ROUBST VERSION DOES NOT USE THE FAST SPECTRUM ACCELERATIONS" << std::endl;
@@ -346,19 +358,19 @@ std::vector<transformation> get_hypothesis_robust(const grid_map& map0,
   // gettimeofday(&tp1,NULL);
 
   grid_map g0, g1, g2, map1;
-  cast_image_bw(g0,map0);
-  cast_image_bw(g2,map2);
+  cast_image_bw(g0, map0);
+  cast_image_bw(g2, map2);
 
   std::vector<point> p0, p1, p2;
   g0.get_points(p0);
   g2.get_points(p2);
 
-  float rhoscale1,rhoscale2,rhoscale;
+  float rhoscale1, rhoscale2, rhoscale;
 
   rhoscale1 = find_max_coordinate(p0);
   rhoscale2 = find_max_coordinate(p2);
 
-  rhoscale = 2 * std::max(rhoscale1,rhoscale2);
+  rhoscale = 2 * std::max(rhoscale1, rhoscale2);
 
   grid_map HT0, HT1, HT2;
 
@@ -390,7 +402,7 @@ std::vector<transformation> get_hypothesis_robust(const grid_map& map0,
   int adjustment = max_element(HTSpectrum0.begin(), HTSpectrum0.end()) - HTSpectrum0.begin();
   float adjustment_rotation = float(adjustment) * 360 / theta_cells;
   //rotate_map(g1,g0,(int)round(adjustment_rotation),g1.get_free_cell(),outtx,outty);
-  rotate_map(map1, map0,(int)adjustment_rotation, map1.get_unknown_cell(), outtx,outty);
+  rotate_map(map1, map0, (int)adjustment_rotation, map1.get_unknown_cell(), outtx, outty);
   restore_map(map1);
   cast_image_bw(g1, map1);
   /* Needed for backing ups transormations later on */
@@ -498,7 +510,8 @@ std::vector<transformation> get_hypothesis_robust(const grid_map& map0,
       
     cvMatMul(T1inv, T3, T4);
 
-    raw_transform_map(imtrans, map2, -rotationEstimate[hyp]-adjustment_rotation, cvmGet(T4,0,2), cvmGet(T4,1,2), map2.get_unknown_cell());
+    raw_transform_map(imtrans, map2, -rotationEstimate[hyp]-adjustment_rotation, cvmGet(T4, 0, 2), cvmGet(T4, 1, 2),
+                      map2.get_unknown_cell());
 
     restore_map(imtrans);
     // now recover the transformation in the original frame
@@ -566,11 +579,11 @@ std::vector<transformation> get_hypothesis_robust(const grid_map& map0,
 
 // This is the basic  version 
 std::vector<transformation> get_hypothesis(const grid_map& map0,
-				      const grid_map& map2,
-				      unsigned int n_hypothesis,
-				      unsigned int hough_increment,
-				      bool randomized,
-				      float fraction) 
+				                                   const grid_map& map2,
+				                                   unsigned int n_hypothesis,
+				                                   unsigned int hough_increment,
+				                                   bool randomized,
+				                                   float fraction) 
 {
   
   unsigned int i;
@@ -603,13 +616,13 @@ std::vector<transformation> get_hypothesis(const grid_map& map0,
 
   if ( randomized )
   {
-    compute_Randomized_Hough_transform(HT0,p0,theta_cells,rho_cells,rhoscale,fraction);
-    compute_Randomized_Hough_transform(HT2,p2,theta_cells,rho_cells,rhoscale,fraction);
+    compute_Randomized_Hough_transform(HT0, p0, theta_cells, rho_cells, rhoscale, fraction);
+    compute_Randomized_Hough_transform(HT2, p2, theta_cells, rho_cells, rhoscale, fraction);
   }
   else
   {
-    compute_Hough_transform(HT0,p0,theta_cells,rho_cells,rhoscale,hough_increment);
-    compute_Hough_transform(HT2,p2,theta_cells,rho_cells,rhoscale,hough_increment);
+    compute_Hough_transform(HT0, p0, theta_cells, rho_cells, rhoscale, hough_increment);
+    compute_Hough_transform(HT2, p2, theta_cells, rho_cells, rhoscale, hough_increment);
   }
   
   std::vector<float> HTSpectrum0, HTSpectrum1, HTSpectrum2, CrossSpectra;
@@ -718,7 +731,8 @@ std::vector<transformation> get_hypothesis(const grid_map& map0,
       
     cvMatMul(T1inv, T3, T4);
 
-    raw_transform_map(imtrans,map2, -rotationEstimate[hyp]-adjustment_rotation, cvmGet(T4,0,2), cvmGet(T4,1,2), map2.get_unknown_cell());
+    raw_transform_map(imtrans, map2, -rotationEstimate[hyp]-adjustment_rotation, cvmGet(T4, 0, 2), cvmGet(T4, 1, 2),
+                      map2.get_unknown_cell());
 
     restore_map(imtrans);
     // now recover the transformation in the original frame
@@ -875,7 +889,8 @@ unsigned int overlapping(const grid_map& g1, const grid_map&g2)
 
 
 // OK
-float acceptance_index(const grid_map&g1, const grid_map&g2) {
+float acceptance_index(const grid_map&g1, const grid_map&g2)
+{
   unsigned int agr = agreement(g1,g2);
   unsigned int dis = disagreement(g1,g2);
   
