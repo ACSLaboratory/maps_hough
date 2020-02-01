@@ -19,7 +19,7 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
-// #include "cv_bridge/cv_bridge.h"
+#include "cv_bridge/cv_bridge.h"
 #include "tf2/utils.h"
 
 // Local header files
@@ -55,14 +55,25 @@ public:
         double radial_noise=0.01,
         double sensing_radius_=0.40);
 
+  // Robot Attribute Encapsulation
+  void set_turn_speed(double new_speed);
+
+  // Robot Operations
+  void move();
+  void stop();
+
   // Callbacks
   void timer_callback();
   void laser_scan_callback(sensor_msgs::msg::LaserScan::SharedPtr msg);
+  void base_pose_callback(nav_msgs::msg::Odometry::SharedPtr msg);
 
   // Robot Pose
   double x;  // meters
   double y;  // meters
   double w;  // radians
+
+  // Robot Msgs
+  geometry_msgs::msg::Twist cmd_vel_msg();
 
   // Grid map
   mapmerge::grid_map g_map;
